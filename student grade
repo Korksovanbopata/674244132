@@ -1,0 +1,57 @@
+# prompt: student score calculate using array
+
+import numpy as np
+
+student_data = [
+    ['644244112','นายชวกร  เมืองถาวร'],
+    ['644244115','นายญาณวุฒิ  บริบูรณ์'],
+    ['674244101','นางสาวกนกวรรณ  พรหมเทพ'],
+    ['674244102','นางสาวเกศินี  รุ่งเจริญดี'],
+    ['674244103','นางสาวจิดาภา  ยิ้มย่อง'],
+    ['674244104','นางสาวณาตาฌา  เรืองชัย'],
+    ['674244105','นางสาวณิชนัทนท์  แสงทอง']
+]
+
+midterm = np.array([[10],[9],[5],[10],[10],[10],[7]])
+final_score = np.array([[60],[55],[49],[70],[66],[59],[70]])
+
+student_np = np.array(student_data)
+
+# Combine all scores
+student_np = np.concatenate((student_np, midterm, final_score), axis=1)
+
+# Calculate total score (assuming midterm and final have equal weight)
+total_scores = midterm + final_score
+
+# Calculate grades
+grades = []
+for total in total_scores:
+    total = total[0] #access the score value
+    if total >= 80:
+        grade = 'A'
+    elif total >= 75:
+        grade = 'B+'
+    elif total >= 70:
+        grade = 'B'
+    elif total >= 65:
+        grade = 'C+'
+    elif total >= 60:
+        grade = 'C'
+    elif total >= 55:
+        grade = 'D+'
+    elif total >= 50:
+        grade = 'D'
+    else:
+        grade = 'E'
+    grades.append(grade)
+
+# Convert grades to a NumPy array for easy concatenation
+grades_np = np.array(grades).reshape(-1, 1)
+
+
+# Append grades to the student data
+student_np = np.concatenate((student_np, total_scores, grades_np), axis=1)
+
+
+# Print results
+student_np
